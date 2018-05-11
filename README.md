@@ -6,5 +6,6 @@ Generate Humor using LSTM variant
 - virtualenv -p python .env
 - .env\Scripts\activate
 - pip install -r requirements.txt
+- install pytorch
 - jupyter notebook
 - deactivate

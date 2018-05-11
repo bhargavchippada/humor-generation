@@ -2,3 +2,6 @@ ipython
 jupyter
 notebook
 pandas
+matplotlib
+livelossplot
+tqdm
