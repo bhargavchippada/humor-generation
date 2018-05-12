@@ -5,3 +5,5 @@ pandas
 matplotlib
 livelossplot
 tqdm
+keras
+wget
