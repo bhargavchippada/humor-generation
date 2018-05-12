@@ -12,6 +12,8 @@ def download_data(path, output_dir='./data'):
 def load_data(file_path, header=False, sep=None):
     if header:
         header = 0
+    else:
+        header = None
     return pd.read_csv(file_path, sep=sep, header=header)
 
 def get_unique_chars(data_list):
