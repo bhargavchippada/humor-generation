@@ -9,12 +9,12 @@ def download_data(path, output_dir='./data'):
     filename = wget.download(path, output_dir)
     return filename
 
-def load_data(file_path, header=False, sep=None):
+def load_data(file_path, header=False, sep=None, usecols=None):
     if header:
         header = 0
     else:
         header = None
-    return pd.read_csv(file_path, sep=sep, header=header)
+    return pd.read_csv(file_path, sep=sep, header=header, usecols=usecols, engine='python')
 
 def get_unique_chars(data_list):
     return sorted(list(set(''.join(data_list))))
@@ -42,6 +42,9 @@ def clean_data(data_list, regex, special_chars):
     
     # more than one dot to 3 dots, special case... human
     data_list = [re.sub('\.(\.)+', " threedots ", item) for item in data_list]
+    
+    # replace i've to ive, don't to dont
+    data_list = [re.sub(r"([a-zA-Z])(')([a-zA-Z])", r'\1\3', item) for item in data_list]
     
     # multiple repetitions to single
     for c in special_chars:
