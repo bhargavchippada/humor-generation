@@ -36,18 +36,21 @@ def filter_data(data_list, regex):
     r = re.compile(regex)
     return list(filter(r.match, data_list))
 
-def clean_data(data_list, regex, special_chars):
+def clean_data(data_list, regex, pad_chars):
     # filter sentences which match the regex
     data_list = filter_data(data_list, regex)
     
     # more than one dot to 3 dots, special case... human
     data_list = [re.sub('\.(\.)+', " threedots ", item) for item in data_list]
     
-    # replace i've to ive, don't to dont
-    data_list = [re.sub(r"([a-zA-Z])(')([a-zA-Z])", r'\1\3', item) for item in data_list]
+    # special rules to deal with full-stop and '
+    data_list = [re.sub(r"([a-zA-Z])(')([^a-zA-Z]|$)", r'\1 \2 \3', item) for item in data_list]
+    data_list = [re.sub(r"(^|[^a-zA-Z])(')([a-zA-Z])", r'\1 \2 \3', item) for item in data_list]
+    data_list = [re.sub(r"([a-zA-Z])(\.)([^a-zA-Z]|$)", r'\1 \2 \3', item) for item in data_list]
+    data_list = [re.sub(r"(^|[^a-zA-Z])(\.)([a-zA-Z])", r'\1 \2 \3', item) for item in data_list]
     
     # multiple repetitions to single
-    for c in special_chars:
+    for c in pad_chars:
         data_list = [re.sub("(\\"+c+")+", ' ' + c + ' ', item) for item in data_list]
     data_list = [re.sub('\\\\', ' ', item) for item in data_list]
     
