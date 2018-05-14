@@ -7,3 +7,4 @@ livelossplot
 tqdm
 keras
 wget
+Tensorboard

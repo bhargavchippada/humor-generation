@@ -101,3 +101,4 @@ ENV/
 .mypy_cache/
 
 data/training.1600000.processed.noemoticon.csv
+logs
